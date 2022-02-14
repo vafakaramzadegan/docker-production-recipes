@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% include 'nav.html' with context %}
+
+    <section class="hero is-link">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <p class="title">
+                    Greetings and salutations!
+                </p>
+                <p class="subtitle">
+                    It seems that all is well and the application is running.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="columns is-mobile mt-5">
+        <div class="column is-half is-offset-one-quarter">
+            <div class="content">
+                <p>
+                    You have successfully deployed a web stack suitable for production environments.
+                    <br/>
+                </p>
+                <div class="notification is-info is-light">
+                    <div class="columns">
+                        <div class="column is-one-fifth">
+                            <figure class="image is-64x64">
+                                <img src="/static/docker.png">
+                            </figure>                 
+                        </div>
+                        <div class="column">Thanks to docker, setting up the web stack and the application was done in only a few minutes.<br/> This usually takes about an hour to accomplish by an experienced person.</div>
+                    </div>
+                </div>
+                <p>
+                    this includes:
+                    <br/>
+                    <ul>
+                        <li><strong>Varnish Cache Server</strong> which is a powerful, high-performance HTTP accelerator designed for speeding up the website by up to 1000 percent by caching (or storing) a copy of a webpage the first time a user visits.</li>
+                        <li><strong>NGINX</strong> as a reverse-proxy. Even though it has numerous other functionalities, we use it only as an intermediate between Varnish and Gunicorn.</li>
+                        <li><strong>Gunicorn</strong> is a pure-Python WSGI HTTP server for our Flask application. you might be wondering why we use NGINX if Gunicorn itself is an HTTP server? Well, it's noted in the documentation that without a proxy to buffer slow clients, the Gunicorn will be easily susceptible to DOS attacks.</li>
+                        <li><strong>Celery + Redis:</strong> A typical web application is likely to run some tasks like processing customer transactions, API updates, etc. in the background. a common approach might be using Celery which is a Worker Management for Python that takes care of the hard part of receiving tasks and assigning them appropriately to workers. Redis on the other hand is a message broker to handle the queues between the Flask application and Celery.</li>
+                        <li><strong>PostgreSQL </strong> is an advanced, enterprise-class open-source relational database that supports both SQL (relational) and JSON (non-relational) querying. It is a highly stable database management system, backed by more than 20 years of community development which has contributed to its high levels of resilience, integrity, and correctness. PostgreSQL is used as the primary data store or data warehouse for many web, mobile, geospatial, and analytics applications.</li>
+                        <li><strong>pgAdmin</strong> is the most popular and feature-rich Open Source administration and development platform for PostgreSQL. You'd better disable or restrict access to pgAdmin on your production environment. it's also recommended to choose a strong password to log in.</b></li>
+                    </ul>
+                </p>
+                <img src="/static/workflow.jpg">
+            </div>
+            <article class="message is-danger">
+                <div class="message-header">
+                    <p>WARNING</p>
+                </div>
+                <div class="message-body">
+                    Although primary security measures have been implemented, there is <b>ALWAYS</b> a <b>POSSIBILITY</b> of a <b>security breach</b> due to writing insecure code in your application, vulnerabilities already found in any of the components listed above, other installed packages, or misconfigurations of the server.
+                    <br/><br/>
+                    <b>DON'T FORGET</b> to enable and configure the Firewall.
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+        <p>
+            Made with <i class="fa fa-heart has-text-danger"></i> by <a href="https://github.com/vafakaramzadegan">Vafa Karamzadegan</a>.
+        </p>
+        </div>
+    </footer>
+{% endblock %}

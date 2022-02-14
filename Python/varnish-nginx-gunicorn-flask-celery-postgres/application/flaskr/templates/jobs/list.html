@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% include 'nav.html' with context %}
+
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <p class="title">
+                    Background Jobs
+                </p>
+                <p class="subtitle">
+                    This is the list of tasks executed in the background.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="columns is-mobile mt-5">
+        <div class="column is-half is-offset-one-quarter">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Job Name</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                        <tr>
+                            <td>{{ job.id }}</td>
+                            <td>{{ job.job_name }}</td>
+                            <td>{{ job.dt }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+        <p>
+            Made with <i class="fa fa-heart has-text-danger"></i> by <a href="https://github.com/vafakaramzadegan">Vafa Karamzadegan</a>.
+        </p>
+        </div>
+    </footer>
+{% endblock %}

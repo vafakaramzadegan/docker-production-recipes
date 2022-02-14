@@ -1,0 +1,92 @@
+version: '3.3'
+
+
+services:
+  
+  application:
+    container_name: production_sample_application
+    build:
+      context: ./application/
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - FLASK_ENV
+    volumes:
+      - ./application/conf/supervisor/:/etc/supervisor/conf.d/
+      - ./application:/application
+    depends_on:
+      - postgres
+      - redis
+    links:
+      - redis
+    restart: always
+
+  web_server:
+    container_name: production_sample_nginx
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - application
+    links:
+      - application
+    restart: always
+
+  cache_server:
+    container_name: production_sample_varnish
+    image: varnish
+    environment:
+      - VARNISH_PORT
+    volumes:
+      - ./varnish/default.vcl:/etc/varnish/default.vcl
+      - ./varnish/varnish:/etc/default/varnish
+    depends_on:
+     - web_server
+    links:
+     - web_server
+    ports:
+      - ${VARNISH_PORT}:${VARNISH_PORT}
+    restart: always
+
+  postgres:
+    container_name: production_sample_postgres
+    build:
+      context: ./postgres
+    hostname: postgres
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  # It might be better to disable or restrict access to pgAdmin
+  # on your production server.
+  # and also, don't forget to set a strong username and password, as
+  # it may be vulnerable to brute-force attacks.
+  pgadmin:
+    container_name: production_sample_pgadmin
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+      - ${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}
+    environment:
+      - PGADMIN_DEFAULT_EMAIL
+      - PGADMIN_DEFAULT_PASSWORD
+      - PGADMIN_LISTEN_PORT
+    restart: always
+
+  redis:
+    container_name: production_sample_redis
+    image: 'redis:latest'
+    restart: always
+    volumes:
+      - 'redis_data:/data'
+
+
+volumes:
+  redis_data:
+  postgres_data:

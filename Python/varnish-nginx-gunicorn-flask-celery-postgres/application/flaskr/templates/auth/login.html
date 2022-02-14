@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="hero is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                        {% if get_flashed_messages() %}
+                            <article class="message is-danger">
+                                <div class="message-body">
+                                    {% for message in get_flashed_messages() %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            </article>
+                        {% endif %}
+                        <form class="box" action="" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <div class="field">
+                                <label for="" class="label">Username</label>
+                                <div class="control has-icons-left">
+                                    <input type="text" name="username" placeholder="john.doe" class="input" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Password</label>
+                                <div class="control has-icons-left">
+                                    <input type="password" name="password" placeholder="*******" class="input" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="field is-grouped is-grouped-centered mt-5">
+                                <div class="control">
+                                    <img src="{{ captcha_src }}" >
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Captcha</label>
+                                <input type="text" name="captcha" placeholder="Captcha" class="input" required>
+                            </div>
+                            <div class="field">
+                                <button class="button is-link">
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
