@@ -14,6 +14,9 @@ This repository contains several boilerplates especially curated for production 
 ### Python
 - [varnish-nginx-flask-celery-postgres](https://github.com/vafakaramzadegan/docker-production-recipes/tree/main/Python/varnish-nginx-gunicorn-flask-celery-postgres)
 
+### PHP
+- [varnish-nginx-phalconphp-mysql](https://github.com/vafakaramzadegan/docker-production-recipes/tree/main/PHP/varnish-nginx-phalconphp-mysql/php7.4)
+
 ## How To Use
 
 Using a boilerplate is easy. **Docker** and **docker-compose** must be installed on your machine.
