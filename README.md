@@ -15,7 +15,9 @@ This repository contains several boilerplates especially curated for production 
 - [varnish-nginx-flask-celery-postgres](https://github.com/vafakaramzadegan/docker-production-recipes/tree/main/Python/varnish-nginx-gunicorn-flask-celery-postgres)
 
 ### PHP
-- [varnish-nginx-phalconphp-mysql](https://github.com/vafakaramzadegan/docker-production-recipes/tree/main/PHP/varnish-nginx-phalconphp-mysql/php7.4)
+- [varnish-nginx-phalconphp4-mysql](https://github.com/vafakaramzadegan/docker-production-recipes/tree/main/PHP/varnish-nginx-phalconphp4-mysql/php7.4)
+- [varnish-httpd-phalconphp3.4-mysql](https://github.com/vafakaramzadegan/docker-production-recipes/tree/main/PHP/varnish-httpd-phalconphp3-mysql)
+
 
 ## How To Use
 
@@ -23,7 +25,7 @@ Using a boilerplate is easy. **Docker** and **docker-compose** must be installed
 - Download/Clone the repo.
 - Open a terminal.
 - `cd` to the directory of the boilerplate you want.
-- invoke `docker-compose up -d --build`. this builds the image and `-d` tells Docker to run the containers in the background (Detached mode). The first time you build the image may take a while, however consecutive builds will become much faster.
+- invoke `docker-compose up -d --build`. this builds the image and `-d` tells Docker to run the containers in the background (Detached mode). The first time you build the image may take a while, however subsequent builds will become much faster.
 - use `docker-compose down` to stop and remove containers. you may use `--volume` to remove named volumes declared in the Compose file.
 
 ## Contributing
