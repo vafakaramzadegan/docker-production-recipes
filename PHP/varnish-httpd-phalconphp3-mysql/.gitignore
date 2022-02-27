@@ -1,0 +1,6 @@
+website/cache/volt/*.php
+.DS_Store*
+*.komodoproject
+*.sublime-project
+*.sublime-workspace
+.idea/

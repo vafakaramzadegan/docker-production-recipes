@@ -1,0 +1,21 @@
+RewriteEngine On
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteRule  ^$ public/    [L]
+    RewriteRule  (.*) public/$1 [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+	# Set XSS Protection header
+	Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+<IfModule mod_headers.c>
+	Header always unset Server
+	Header always unset X-Powered-By
+	Header unset X-Powered-By
+	Header unset X-CF-Powered-By
+	Header unset X-Mod-Pagespeed
+	Header unset X-Pingback
+</IfModule>

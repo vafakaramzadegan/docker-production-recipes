@@ -1,0 +1,64 @@
+version: '3.3'
+
+
+services:
+
+  httpd_server:
+    build:
+      context: ./httpd/
+    volumes:
+      - ./website:/var/www/html
+      - ./httpd/httpd.conf:/etc/httpd/conf/httpd.conf
+    restart: always
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
+
+  cache_server:
+    image: varnish
+    environment:
+      - VARNISH_PORT
+    volumes:
+      - ./varnish/default.vcl:/etc/varnish/default.vcl
+      - ./varnish/varnish:/etc/default/varnish
+    depends_on:
+     - httpd_server
+    links:
+     - httpd_server
+    ports:
+      - ${VARNISH_PORT}:${VARNISH_PORT}
+    restart: always
+
+  # it's better to disable or restrict access to phpmyadmin in your
+  # production environment
+  myadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+        - "5555:80"
+    environment:
+        - PMA_ARBITRARY=1
+        - PMA_HOST=mysqldb
+    restart: always
+    depends_on:
+        - mysqldb
+
+  mysqldb:
+    container_name: mysql_database
+    build:
+      context: ./mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    cap_add:
+      - SYS_NICE
+    environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+        - mysql_data:/var/lib/mysql
+        - ./mysql/my.cnf:/etc/mysql/my.cnf
+
+volumes:
+  mysql_data:
